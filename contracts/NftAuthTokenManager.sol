@@ -10,6 +10,8 @@ import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 contract NftAuthTokenManager {
     using SafeMath for uint;
 
+    address[] nftAuthTokenList;
+
     constructor() public {}
 
     /***
@@ -17,8 +19,15 @@ contract NftAuthTokenManager {
      **/
     function createNftAuthToken() public returns (address _nftAuthToken) {
         NftAuthToken nftAuthToken = new NftAuthToken();  /// [Note]: There is no constructor
+        nftAuthTokenList.push(address(nftAuthToken));
         return address(nftAuthToken);
     }
+
+    // function _saveNftAuthTokenMetadata() internal returns (bool) {
+    //     NftAuthTokenMetadata storage nftAuthTokenMetadata = nftAuthTokenMetadatas[address(nftAuthToken)];
+    //     return address(nftAuthToken);
+    // }
+
 
     /***
      * @notice - Deposit (Stake) DAI into the specified NftAuthToken contract address
