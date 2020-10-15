@@ -11,7 +11,7 @@ import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 contract NftAuthTokenManager {
     using SafeMath for uint;
 
-    address[] nftAuthTokenList;
+    address[] nftAuthTokenList;  /// [Note]: This array is for using for-loop
 
     IERC20 public dai;
 
