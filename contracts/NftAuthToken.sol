@@ -12,15 +12,18 @@ contract NftAuthToken is ERC721 {
 
     constructor() public ERC721("NFT Auth Token", "NAT") {}
 
-    function createAuthToken(address to, string memory authTokenURI) public returns (uint _newAuthTokenId) {
-        _createAuthToken(to, authTokenURI);
+    function createAuthToken(address to, string memory ipfsHash) public returns (uint _newAuthTokenId) {
+        _createAuthToken(to);
     }
 
-    function _createAuthToken(address to, string memory authTokenURI) internal returns (uint _newAuthTokenId) {
+    function _createAuthToken(address to, string memory ipfsHash) internal returns (uint _newAuthTokenId) {
         uint newAuthTokenId = getNextAuthTokenId();
         currentAuthTokenId++;
         _mint(to, newAuthTokenId);
-        _setTokenURI(newAuthTokenId, authTokenURI);
+
+        string password;
+        _setTokenURI(newAuthTokenId, ipfsHash);  /// [Note]: Use ipfsHash as a password and metadata
+        //_setTokenURI(newAuthTokenId, authTokenURI); 
 
         return newAuthTokenId;
     }
@@ -28,9 +31,9 @@ contract NftAuthToken is ERC721 {
     /***
      * @notice - Login with Auth Token
      **/
-    function loginWithAuthToken(uint authTokenId, address userAddress) public returns (bool _isAuth) {
+    function loginWithAuthToken(uint authTokenId, address userAddress, string ipfsHash) public returns (bool _isAuth) {
         bool isAuth;
-        if (authTokenId == ownerOf(userAddress)) {
+        if (userAddress == ownerOf(authTokenId) && ipfsHash == tokenURI(authTokenId)) {
             isAuth = true;
         }
 
