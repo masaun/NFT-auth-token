@@ -42,5 +42,6 @@ contract NftAuthTokenManager {
         dai.transferFrom(msg.sender, address(this), depositAmount);
         dai.transfer(_nftAuthToken, depositAmount);
     }
-    
+
+
 }

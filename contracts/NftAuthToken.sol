@@ -25,6 +25,18 @@ contract NftAuthToken is ERC721 {
         return newAuthTokenId;
     }
 
+    /***
+     * @notice - Login with Auth Token
+     **/
+    function loginWithAuthToken(uint authTokenId, address userAddress) public returns (bool _isAuth) {
+        bool isAuth;
+        if (authTokenId == ownerOf(userAddress)) {
+            isAuth = true;
+        }
+
+        return isAuth;
+    }
+
 
     /***
      * @notice - Private functions
