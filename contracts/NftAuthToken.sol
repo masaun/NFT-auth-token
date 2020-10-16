@@ -12,11 +12,11 @@ contract NftAuthToken is ERC721 {
 
     constructor() public ERC721("NFT Auth Token", "NAT") {}
 
-    function createAuthToken(address to, string memory ipfsHash) public returns (uint _newAuthTokenId) {
-        _createAuthToken(to, ipfsHash);
+    function mintAuthToken(address to, string memory ipfsHash) public returns (uint _newAuthTokenId) {
+        _mintAuthToken(to, ipfsHash);
     }
 
-    function _createAuthToken(address to, string memory ipfsHash) internal returns (uint _newAuthTokenId) {
+    function _mintAuthToken(address to, string memory ipfsHash) internal returns (uint _newAuthTokenId) {
         uint newAuthTokenId = getNextAuthTokenId();
         currentAuthTokenId++;
         _mint(to, newAuthTokenId);
@@ -34,6 +34,7 @@ contract NftAuthToken is ERC721 {
         bytes32 hash1 = keccak256(abi.encodePacked(ipfsHash));
         bytes32 hash2 = keccak256(abi.encodePacked(tokenURI(authTokenId)));
 
+        /// Check 
         bool isAuth;
         if (userAddress == ownerOf(authTokenId)) {
             if (hash1 == hash2) {

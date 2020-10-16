@@ -11,7 +11,7 @@ import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 contract NftAuthTokenManager {
     using SafeMath for uint;
 
-    address[] nftAuthTokenList;  /// [Note]: This array is for using for-loop
+    address[] authTokenList;  /// [Note]: This array is for using for-loop
 
     IERC20 public dai;
 
@@ -20,17 +20,17 @@ contract NftAuthTokenManager {
     }
 
     /***
-     * @notice - Create new NftAuthToken contract address
+     * @notice - Create new AuthToken contract address
      **/
-    function createNftAuthToken() public returns (address _nftAuthToken) {
-        NftAuthToken nftAuthToken = new NftAuthToken();  /// [Note]: There is no constructor
-        nftAuthTokenList.push(address(nftAuthToken));
-        return address(nftAuthToken);
+    function createAuthToken() public returns (address _authToken) {
+        NftAuthToken authToken = new NftAuthToken();  /// [Note]: There is no constructor
+        authTokenList.push(address(authToken));
+        return address(authToken);
     }
 
-    // function _saveNftAuthTokenMetadata() internal returns (bool) {
-    //     NftAuthTokenMetadata storage nftAuthTokenMetadata = nftAuthTokenMetadatas[address(nftAuthToken)];
-    //     return address(nftAuthToken);
+    // function _saveauthTokenMetadata() internal returns (bool) {
+    //     authTokenMetadata storage authTokenMetadata = authTokenMetadatas[address(asuthToken)];
+    //     return address(authToken);
     // }
 
 
@@ -38,12 +38,12 @@ contract NftAuthTokenManager {
 
 
     /***
-     * @notice - Deposit (Stake) DAI into the specified NftAuthToken contract address
+     * @notice - Deposit (Stake) DAI into the specified AuthToken contract address
      **/
-    function depositDaiIntoNftAuthToken(address _nftAuthToken, uint depositAmount) public returns (bool) {
-        /// Deposit DAI from msg.sender to specified NftAuthToken contract address via this contract address 
+    function depositDaiIntoAuthToken(address _authToken, uint depositAmount) public returns (bool) {
+        /// Deposit DAI from msg.sender to specified AuthToken contract address via this contract address 
         dai.transferFrom(msg.sender, address(this), depositAmount);
-        dai.transfer(_nftAuthToken, depositAmount);
+        dai.transfer(_authToken, depositAmount);
     }
 
 
