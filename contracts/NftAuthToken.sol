@@ -30,9 +30,15 @@ contract NftAuthToken is ERC721 {
      * @notice - Login with Auth Token
      **/
     function loginWithAuthToken(uint authTokenId, address userAddress, string memory ipfsHash) public returns (bool _isAuth) {
+        /// [Note]: Convert each value (data-type are string) to hash in order to compare with each other 
+        bytes32 hash1 = keccak256(abi.encodePacked(ipfsHash));
+        bytes32 hash2 = keccak256(abi.encodePacked(tokenURI(authTokenId)));
+
         bool isAuth;
-        if (userAddress == ownerOf(authTokenId) && ipfsHash == tokenURI(authTokenId)) {
-            isAuth = true;
+        if (userAddress == ownerOf(authTokenId)) {
+            if (hash1 == hash2) {
+                isAuth = true;
+            }
         }
 
         return isAuth;
