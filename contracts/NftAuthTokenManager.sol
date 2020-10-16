@@ -34,6 +34,9 @@ contract NftAuthTokenManager {
     // }
 
 
+    
+
+
     /***
      * @notice - Deposit (Stake) DAI into the specified NftAuthToken contract address
      **/
@@ -42,5 +45,6 @@ contract NftAuthTokenManager {
         dai.transferFrom(msg.sender, address(this), depositAmount);
         dai.transfer(_nftAuthToken, depositAmount);
     }
-    
+
+
 }
