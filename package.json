@@ -7,12 +7,12 @@
   },
   "scripts": {
     "test:local": "truffle test ./test/test-local/* --network local",
-    "test:rinkeby": "truffle test ./test/test-rinkeby/* --network rinkeby",
+    "test:kovan": "truffle test ./test/test-kovan/* --network kovan",
     "start-blank": "rm -rf client/src && cp -rf barebones/src client/",
     "client": "cd client && npm run start",
-    "console:rinkeby": "truffle console --network rinkeby",
-    "compile:rinkeby": "truffle compile --reset --network rinkeby",
-    "migrate:rinkeby": "truffle migrate --reset --network rinkeby",
+    "console:kovan": "truffle console --network kovan",
+    "compile:kovan": "truffle compile --reset --network kovan",
+    "migrate:kovan": "truffle migrate --reset --network kovan",
     "migrate:ropsten": "truffle migrate --reset --network ropsten",
     "migrate:local": "truffle migrate --reset --network local"
   },
