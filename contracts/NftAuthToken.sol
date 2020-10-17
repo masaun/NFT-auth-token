@@ -1,6 +1,7 @@
 pragma solidity ^0.6.12;
 pragma experimental ABIEncoderV2;
 
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 
@@ -10,7 +11,11 @@ contract NftAuthToken is ERC721 {
 
     uint public currentAuthTokenId;
 
-    constructor() public ERC721("NFT Auth Token", "NAT") {}
+    IERC20 public dai;
+
+    constructor(address _dai) public ERC721("NFT Auth Token", "NAT") {
+        dai = IERC20(_dai);
+    }
 
     function mintAuthToken(address to, string memory ipfsHash) public returns (uint _newAuthTokenId) {
         _mintAuthToken(to, ipfsHash);
@@ -43,6 +48,15 @@ contract NftAuthToken is ERC721 {
         }
 
         return isAuth;
+    }
+
+    /***
+     * @notice - Deposit (Stake) DAI into the specified AuthToken contract address
+     **/
+    function depositDaiIntoAuthToken(address _authToken, uint depositAmount) public returns (bool) {
+        /// Deposit DAI from msg.sender to specified AuthToken contract address via this contract address 
+        dai.transferFrom(msg.sender, address(this), depositAmount);
+        dai.transfer(_authToken, depositAmount);
     }
 
 
