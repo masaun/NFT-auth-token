@@ -14,8 +14,11 @@ contract PoolWithNftAuthToken {
     /***
      * @notice - Stake
      **/
-    function stake(address _authToken) public returns (bool) {
+    function stake(NftAuthToken _authToken) public returns (bool) {
         NftAuthToken authToken = NftAuthToken(_authToken);
+        address AUTH_TOKEN = address(_authToken);
+
+
     }
 
 
