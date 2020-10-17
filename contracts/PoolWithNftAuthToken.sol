@@ -3,9 +3,9 @@ pragma experimental ABIEncoderV2;
 
 import { NftAuthToken } from "./NftAuthToken.sol";
 
-import { IMasset } from "@mstable/protocol/contracts/interfaces/IMasset.sol";
-import { IMStableHelper } from "@mstable/protocol/contracts/interfaces/IMStableHelper.sol";
-import { ISavingsContract } from "@mstable/protocol/contracts/interfaces/ISavingsContract.sol";
+import { IMasset } from "./@mstable/protocol/contracts/interfaces/IMasset.sol";
+import { IMStableHelper } from "./@mstable/protocol/contracts/interfaces/IMStableHelper.sol";
+import { ISavingsContract } from "./@mstable/protocol/contracts/interfaces/ISavingsContract.sol";
 
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { SafeERC20 }  from "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
@@ -38,7 +38,7 @@ contract PoolWithNftAuthToken {
         address _beneficiary
     )
         public
-        Ownable()
+        //Ownable()
     {
         mUSD = _mUSD;
         save = _save;
@@ -105,7 +105,7 @@ contract PoolWithNftAuthToken {
     /***
      * @notice - Distribute any of the accrued interest to the beneficiary
      **/
-    function collectInterest() external {
+    function collectInterest(address beneficiary) external {
         /// Check balance of this address (contract address)
         uint256 currentBalance = helper.getSaveBalance(save, address(this));
         uint256 delta = currentBalance - totalGifts;
@@ -113,7 +113,8 @@ contract PoolWithNftAuthToken {
         uint256 creditsToRedeem = helper.getSaveRedeemInput(save, delta);
         save.redeem(creditsToRedeem);
 
-        mUSD.transfer(owner(), delta);
+        mUSD.transfer(beneficiary, delta);
+        //mUSD.transfer(owner(), delta);
 
         emit InterestCollected(delta);
     }
