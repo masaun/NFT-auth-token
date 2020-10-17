@@ -19,15 +19,15 @@ $ npm install
 
 2. Migrate
 ```
-$ npm run migrate:rinkeby
+$ npm run migrate:kovan
 ```
 
 &nbsp;
 
 ## 【Test】
-- Testing for all contract (※ `Rinkeby test network` )
+- Testing for all contract (※ `Kovan test network` )
 ```
-$ npm run test:rinkeby
+$ npm run test:kovan
 ```
 
 
