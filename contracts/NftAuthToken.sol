@@ -69,12 +69,12 @@ contract NftAuthToken is ERC721, PoolWithNftAuthToken {
     /***
      * @notice - deposit/withdrawal/collectInterest via mStable
      **/
-    function stakeIntoPool(uint256 stakeAmount) public returns (bool) {
-        _stakeIntoPool(stakeAmount);
+    function stakeIntoNftPool(uint256 stakeAmount) public returns (bool) {
+        _stakeIntoNftPool(stakeAmount);
     }
     
-    function withdrawFromPool(uint256 withdrawalAmount) public returns (bool) {
-        _withdrawFromPool(withdrawalAmount);
+    function withdrawFromNftPool(uint256 withdrawalAmount) public returns (bool) {
+        _withdrawFromNftPool(withdrawalAmount);
     }
 
     function collectInterest(address beneficiary) public returns (bool) {

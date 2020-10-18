@@ -52,7 +52,7 @@ contract PoolWithNftAuthToken {
     /***
      * @notice - Stake an amount of mUSD and deposit into SAVE
      **/
-    function _stakeIntoPool(
+    function _stakeIntoNftPool(
         uint256 _amount
     )
         internal
@@ -77,7 +77,7 @@ contract PoolWithNftAuthToken {
     /***
      * @notice - Withdraw the staked mUSD
      **/
-    function _withdrawFromPool(
+    function _withdrawFromNftPool(
         uint256 _amount
     )
         internal
