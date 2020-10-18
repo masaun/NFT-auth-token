@@ -3,8 +3,13 @@ pragma experimental ABIEncoderV2;
 
 import { NftAuthToken } from "./NftAuthToken.sol";
 
-import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+//import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
+
+import { IMasset } from "./@mstable/protocol/contracts/interfaces/IMasset.sol";
+import { IMStableHelper } from "./@mstable/protocol/contracts/interfaces/IMStableHelper.sol";
+import { ISavingsContract } from "./@mstable/protocol/contracts/interfaces/ISavingsContract.sol";
 
 
 contract NftAuthTokenManager {
@@ -12,17 +17,29 @@ contract NftAuthTokenManager {
 
     address[] authTokenList;  /// [Note]: This array is for using for-loop
 
-    address DAI;
+    //address DAI;
+    IERC20 public mUSD;
+    ISavingsContract public save;
+    IMStableHelper public helper;
 
-    constructor(address _dai) public {
-        DAI = _dai;
+    constructor(
+        //address _dai
+        IERC20 _mUSD,
+        ISavingsContract _save,
+        IMStableHelper _helper
+    ) public {
+        //DAI = _dai;
+        mUSD = _mUSD;
+        save = _save;
+        helper = _helper;
     }
 
     /***
      * @notice - Create new AuthToken contract address
      **/
-    function createAuthToken() public returns (address _authToken) {
-        NftAuthToken authToken = new NftAuthToken(DAI);  /// [Note]: There is no constructor
+    function createAuthToken(address _beneficiary) public returns (address _authToken) {
+        NftAuthToken authToken = new NftAuthToken(mUSD, save, helper, _beneficiary);
+        //NftAuthToken authToken = new NftAuthToken(DAI);
         authTokenList.push(address(authToken));
         return address(authToken);
     }
