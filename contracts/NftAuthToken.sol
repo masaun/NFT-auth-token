@@ -23,12 +23,11 @@ contract NftAuthToken is ERC721, PoolWithNftAuthToken {
         //address _dai,
         IERC20 _mUSD,
         ISavingsContract _save,
-        IMStableHelper _helper,
-        address _beneficiary
+        IMStableHelper _helper
     ) 
         public 
         ERC721("NFT Auth Token", "NAT")
-        PoolWithNftAuthToken(_mUSD, _save, _helper, _beneficiary)
+        PoolWithNftAuthToken(_mUSD, _save, _helper)
     {
         //dai = IERC20(_dai);
     }
@@ -70,12 +69,12 @@ contract NftAuthToken is ERC721, PoolWithNftAuthToken {
     /***
      * @notice - deposit/withdrawal/collectInterest via mStable
      **/
-    function stakeIntoPool(uint256 stakeAmount) public returns (bool) {
-        _stakeIntoPool(stakeAmount);
+    function stakeIntoNftPool(uint256 stakeAmount) public returns (bool) {
+        _stakeIntoNftPool(stakeAmount);
     }
     
-    function withdrawFromPool(uint256 withdrawalAmount) public returns (bool) {
-        _withdrawFromPool(withdrawalAmount);
+    function withdrawFromNftPool(uint256 withdrawalAmount) public returns (bool) {
+        _withdrawFromNftPool(withdrawalAmount);
     }
 
     function collectInterest(address beneficiary) public returns (bool) {

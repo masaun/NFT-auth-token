@@ -37,8 +37,8 @@ contract NftAuthTokenManager {
     /***
      * @notice - Create new AuthToken contract address
      **/
-    function createAuthToken(address _beneficiary) public returns (address _authToken) {
-        NftAuthToken authToken = new NftAuthToken(mUSD, save, helper, _beneficiary);
+    function createAuthToken() public returns (address _authToken) {
+        NftAuthToken authToken = new NftAuthToken(mUSD, save, helper);
         //NftAuthToken authToken = new NftAuthToken(DAI);
         authTokenList.push(address(authToken));
         return address(authToken);
