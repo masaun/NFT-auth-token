@@ -21,15 +21,16 @@ contract("NftAuthTokenManager", function(accounts) {
     let nftAuthTokenManagerAddr;
     let nftAuthTokenManager;
 
-    it('Set up contract', async () => {
+    beforeEach('Set up contract', async () => {
         nftAuthTokenManagerABI = NftAuthTokenManager.abi;
-        nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["4"]["address"];
-        nftAuthTokenManager = new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
+        //nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["4"]["address"];
+        nftAuthTokenManagerAddr = "0x2B346dDabBCF2C9c95e027b4b508e189235A6C4E"  /// Deployed address
+        nftAuthTokenManager = await new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
     });
     
     it('Send createAuthToken() of NftAuthTokenManager contract', async () => {  /// Success
         let inputData1 = await nftAuthTokenManager.methods.createAuthToken().encodeABI();
-        let transaction1 = await sendTransaction(walletAddress, privateKey, loanTokenFactoryAddr, inputData1)
+        let transaction1 = await sendTransaction(walletAddress, privateKey, nftAuthTokenManagerAddr, inputData1)
     });
 
 });
