@@ -34,8 +34,7 @@ contract PoolWithNftAuthToken {
     constructor(
         IERC20 _mUSD,
         ISavingsContract _save,
-        IMStableHelper _helper,
-        address _beneficiary
+        IMStableHelper _helper
     )
         public
         //Ownable()

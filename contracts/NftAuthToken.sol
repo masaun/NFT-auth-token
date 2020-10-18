@@ -23,12 +23,11 @@ contract NftAuthToken is ERC721, PoolWithNftAuthToken {
         //address _dai,
         IERC20 _mUSD,
         ISavingsContract _save,
-        IMStableHelper _helper,
-        address _beneficiary
+        IMStableHelper _helper
     ) 
         public 
         ERC721("NFT Auth Token", "NAT")
-        PoolWithNftAuthToken(_mUSD, _save, _helper, _beneficiary)
+        PoolWithNftAuthToken(_mUSD, _save, _helper)
     {
         //dai = IERC20(_dai);
     }
