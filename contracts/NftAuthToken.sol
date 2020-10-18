@@ -5,16 +5,32 @@ import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 
+import { PoolWithNftAuthToken } from "./PoolWithNftAuthToken.sol";
 
-contract NftAuthToken is ERC721 {
+import { IMasset } from "./@mstable/protocol/contracts/interfaces/IMasset.sol";
+import { IMStableHelper } from "./@mstable/protocol/contracts/interfaces/IMStableHelper.sol";
+import { ISavingsContract } from "./@mstable/protocol/contracts/interfaces/ISavingsContract.sol";
+
+
+contract NftAuthToken is ERC721, PoolWithNftAuthToken {
     using SafeMath for uint;
 
     uint public currentAuthTokenId;
 
     IERC20 public dai;
 
-    constructor(address _dai) public ERC721("NFT Auth Token", "NAT") {
-        dai = IERC20(_dai);
+    constructor(
+        //address _dai,
+        IERC20 _mUSD,
+        ISavingsContract _save,
+        IMStableHelper _helper,
+        address _beneficiary
+    ) 
+        public 
+        ERC721("NFT Auth Token", "NAT")
+        PoolWithNftAuthToken(_mUSD, _save, _helper, _beneficiary)
+    {
+        //dai = IERC20(_dai);
     }
 
     function mintAuthToken(address to, string memory ipfsHash) public returns (uint _newAuthTokenId) {
@@ -50,14 +66,31 @@ contract NftAuthToken is ERC721 {
         return isAuth;
     }
 
+
+    /***
+     * @notice - deposit/withdrawal/collectInterest via mStable
+     **/
+    function stakeIntoPool(uint256 stakeAmount) public returns (bool) {
+        _stakeIntoPool(stakeAmount);
+    }
+    
+    function withdrawFromPool(uint256 withdrawalAmount) public returns (bool) {
+        _withdrawFromPool(withdrawalAmount);
+    }
+
+    function collectInterest(address beneficiary) public returns (bool) {
+        _collectInterest(beneficiary);
+    }
+
+
     /***
      * @notice - Deposit (Stake) DAI into the specified AuthToken contract address
      **/
-    function depositDaiIntoAuthToken(address _authToken, uint depositAmount) public returns (bool) {
-        /// Deposit DAI from msg.sender to specified AuthToken contract address via this contract address 
-        dai.transferFrom(msg.sender, address(this), depositAmount);
-        dai.transfer(_authToken, depositAmount);
-    }
+    // function depositDaiIntoAuthToken(address _authToken, uint depositAmount) public returns (bool) {
+    //     /// Deposit DAI from msg.sender to specified AuthToken contract address via this contract address 
+    //     dai.transferFrom(msg.sender, address(this), depositAmount);
+    //     dai.transfer(_authToken, depositAmount);
+    // }
 
 
     /***
