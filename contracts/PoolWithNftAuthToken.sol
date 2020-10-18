@@ -24,11 +24,11 @@ contract PoolWithNftAuthToken {
     ISavingsContract public save;
     IMStableHelper public helper;
 
-    mapping(address => uint256) public gifts;
-    uint256 totalGifts = 0;
+    mapping(address => uint256) public pooledAmounts;  /// For individual
+    uint256 totalPooledAmounts = 0;                    /// For total
 
-    event GiftStaked(address indexed staker, uint256 amount);
-    event GiftWithdrawn(address indexed staker, uint256 amount);
+    event AmountStaked(address indexed staker, uint256 amount);
+    event AmountWithdrawn(address indexed staker, uint256 amount);
     event InterestCollected(uint256 amount);
 
     constructor(
@@ -53,7 +53,7 @@ contract PoolWithNftAuthToken {
     /***
      * @notice - Stake an amount of mUSD and deposit into SAVE
      **/
-    function stakeGift(
+    function stakeIntoPool(
         uint256 _amount
     )
         external
@@ -67,28 +67,28 @@ contract PoolWithNftAuthToken {
         /// Depositing into SAVE
         save.depositSavings(_amount);
 
-        /// Tracking the gifts
-        gifts[msg.sender] += _amount;
-        totalGifts += _amount;
+        /// Tracking the pooled amounts
+        pooledAmounts[msg.sender] += _amount;
+        totalPooledAmounts += _amount;
 
-        emit GiftStaked(msg.sender, _amount);
+        emit AmountStaked(msg.sender, _amount);
     }
 
     /***
      * @notice - Withdraw the staked mUSD
      **/
-    function withdrawGift(
+    function withdrawFromPool(
         uint256 _amount
     )
         external
     {
         /// Check balance
-        uint256 giftBalance = gifts[msg.sender];
-        require(_amount <= giftBalance, "Not enough balance");
+        uint256 poolBalance = pooledAmounts[msg.sender];
+        require(_amount <= poolBalance, "Not enough balance");
 
         /// Reduce the storage
-        gifts[msg.sender] -= _amount;
-        totalGifts -= _amount;
+        pooledAmounts[msg.sender] -= _amount;
+        totalPooledAmounts -= _amount;
 
         uint256 creditsToRedeem = helper.getSaveRedeemInput(save, _amount);
         save.redeem(creditsToRedeem);
@@ -99,7 +99,7 @@ contract PoolWithNftAuthToken {
 
         mUSD.transfer(msg.sender, _amount);
 
-        emit GiftWithdrawn(msg.sender, _amount);
+        emit AmountWithdrawn(msg.sender, _amount);
     }
 
     /***
@@ -108,7 +108,7 @@ contract PoolWithNftAuthToken {
     function collectInterest(address beneficiary) external {
         /// Check balance of this address (contract address)
         uint256 currentBalance = helper.getSaveBalance(save, address(this));
-        uint256 delta = currentBalance - totalGifts;
+        uint256 delta = currentBalance - totalPooledAmounts;
 
         uint256 creditsToRedeem = helper.getSaveRedeemInput(save, delta);
         save.redeem(creditsToRedeem);
