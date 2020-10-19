@@ -24,7 +24,7 @@ contract("NftAuthTokenManager", function(accounts) {
     beforeEach('Set up contract', async () => {
         nftAuthTokenManagerABI = NftAuthTokenManager.abi;
         //nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["4"]["address"];
-        nftAuthTokenManagerAddr = "0x2B346dDabBCF2C9c95e027b4b508e189235A6C4E"  /// Deployed address
+        nftAuthTokenManagerAddr = "0x2B346dDabBCF2C9c95e027b4b508e189235A6C4E"  /// Deployed address on Kovan
         nftAuthTokenManager = await new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
     });
     
