@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const Tx = require('ethereumjs-tx').Transaction;
 const Web3 = require('web3');
-const provider = new Web3.providers.HttpProvider(`https://rinkeby.infura.io/v3/${ process.env.INFURA_KEY }`);
+const provider = new Web3.providers.HttpProvider(`https://kovan.infura.io/v3/${ process.env.INFURA_KEY }`);
 const web3 = new Web3(provider);
 
 let NftAuthTokenManager = {};
