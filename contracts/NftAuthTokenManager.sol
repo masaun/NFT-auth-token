@@ -53,7 +53,7 @@ contract NftAuthTokenManager {
 
     ///-------------------------- Getter methods ----------------------------///
 
-    function getAuthTokenList() public view returns (address[] _authTokenList) {
+    function getAuthTokenList() public view returns (address[] memory _authTokenList) {
         return authTokenList;
     }
     
