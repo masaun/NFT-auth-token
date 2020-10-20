@@ -17,8 +17,6 @@ contract NftAuthToken is ERC721, PoolWithNftAuthToken {
 
     uint public currentAuthTokenId;
 
-    IERC20 public dai;
-
     constructor(
         //address _dai,
         IERC20 _mUSD,

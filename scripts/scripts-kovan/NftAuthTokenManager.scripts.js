@@ -23,9 +23,12 @@ let nftAuthTokenManager;
 /* Set up contract */
 async function createAuthToken() {
     nftAuthTokenManagerABI = NftAuthTokenManager.abi;
-    //nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["4"]["address"];
-    nftAuthTokenManagerAddr = "0x64798e7021f700296691f957b4354C98d52b2fc3"  /// Deployed address on Kovan
+    nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["42"]["address"];    /// Deployed address on Kovan
+    //nftAuthTokenManagerAddr = "0xa64979b0bDF63a1300a1202ecF9dB746D50BA7dd"       /// Deployed address on Kovan
     nftAuthTokenManager = await new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
+
+    /// Log
+    console.log('=== nftAuthTokenManagerAddr ===', nftAuthTokenManagerAddr);
 
     /* Send createAuthToken() of NftAuthTokenManager contract */
     let inputData1 = await nftAuthTokenManager.methods.createAuthToken().encodeABI();
