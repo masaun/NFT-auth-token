@@ -12,22 +12,22 @@ import { IMStableHelper } from "./@mstable/protocol/contracts/interfaces/IMStabl
 import { ISavingsContract } from "./@mstable/protocol/contracts/interfaces/ISavingsContract.sol";
 
 
-contract NftAuthToken is ERC721, PoolWithNftAuthToken {
+contract NftAuthToken is ERC721 {
+//contract NftAuthToken is ERC721, PoolWithNftAuthToken {
     using SafeMath for uint;
 
     uint public currentAuthTokenId;
 
     constructor(
-        //address _dai,
-        IERC20 _mUSD,
-        ISavingsContract _save,
-        IMStableHelper _helper
+        // IERC20 _mUSD,
+        // ISavingsContract _save,
+        // IMStableHelper _helper
     ) 
         public 
         ERC721("NFT Auth Token", "NAT")
-        PoolWithNftAuthToken(_mUSD, _save, _helper)
+        //PoolWithNftAuthToken(_mUSD, _save, _helper)
     {
-        //dai = IERC20(_dai);
+        /// There is no code at the moment
     }
 
     function mintAuthToken(address to, string memory ipfsHash) public returns (uint _newAuthTokenId) {
@@ -67,17 +67,17 @@ contract NftAuthToken is ERC721, PoolWithNftAuthToken {
     /***
      * @notice - deposit/withdrawal/collectInterest via mStable
      **/
-    function stakeIntoNftPool(uint256 stakeAmount) public returns (bool) {
-        _stakeIntoNftPool(stakeAmount);
-    }
+    // function stakeIntoNftPool(uint256 stakeAmount) public returns (bool) {
+    //     _stakeIntoNftPool(stakeAmount);
+    // }
     
-    function withdrawFromNftPool(uint256 withdrawalAmount) public returns (bool) {
-        _withdrawFromNftPool(withdrawalAmount);
-    }
+    // function withdrawFromNftPool(uint256 withdrawalAmount) public returns (bool) {
+    //     _withdrawFromNftPool(withdrawalAmount);
+    // }
 
-    function collectInterest(address beneficiary) public returns (bool) {
-        _collectInterest(beneficiary);
-    }
+    // function collectInterest(address beneficiary) public returns (bool) {
+    //     _collectInterest(beneficiary);
+    // }
 
 
     /***
