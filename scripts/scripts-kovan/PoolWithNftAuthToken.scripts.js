@@ -30,7 +30,7 @@ async function _stakeIntoNftPool() {
     console.log('=== poolWithNftAuthTokenAddr ===', poolWithNftAuthTokenAddr);
 
     /* Send _stakeIntoNftPool() of NftAuthTokenManager contract */
-    const amount = web3.utils.toWei(`${ 100 }`, 'ether');
+    const amount = web3.utils.toWei(`${ 1 }`, 'ether');  /// 1 mUSD
     let inputData1 = await poolWithNftAuthToken.methods._stakeIntoNftPool(amount).encodeABI();
     let transaction1 = await sendTransaction(walletAddress, privateKey, poolWithNftAuthTokenAddr, inputData1)
 }
