@@ -55,8 +55,10 @@ contract PoolWithNftAuthToken {
     function _stakeIntoNftPool(
         uint256 _amount
     )
-        internal
+        public
+        //internal
         //external
+        returns (bool)
     {
         // Either we are depositing mUSD or we can mint as follows
         // IMasset(_mUSD).mint(<bAsset>, <bAssetQuanity>);
@@ -80,8 +82,10 @@ contract PoolWithNftAuthToken {
     function _withdrawFromNftPool(
         uint256 _amount
     )
-        internal
+        public
+        //internal
         //external
+        returns (bool)
     {
         /// Check balance
         uint256 poolBalance = pooledAmounts[msg.sender];
@@ -107,8 +111,10 @@ contract PoolWithNftAuthToken {
      * @notice - Distribute any of the accrued interest to the beneficiary
      **/
     function _collectInterest(address beneficiary) 
-        internal
+        public
+        //internal
         //external 
+        returns (bool)
     {
         /// Check balance of this address (contract address)
         uint256 currentBalance = helper.getSaveBalance(save, address(this));
