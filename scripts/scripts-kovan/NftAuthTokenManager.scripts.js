@@ -11,6 +11,7 @@ NftAuthTokenManager = require("../../build/contracts/NftAuthTokenManager.json");
 const walletAddress = process.env.WALLET_ADDRESS;
 const privateKey = process.env.PRIVATE_KEY;
 
+
 /***
  * @dev - [Execution]: $ node ./scripts/scripts-kovan/NftAuthTokenManager.scripts.js
  **/
@@ -20,11 +21,10 @@ let nftAuthTokenManagerABI;
 let nftAuthTokenManagerAddr;
 let nftAuthTokenManager;
 
-/* Set up contract */
 async function createAuthToken() {
+    /* Set up contract */
     nftAuthTokenManagerABI = NftAuthTokenManager.abi;
     nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["42"]["address"];    /// Deployed address on Kovan
-    //nftAuthTokenManagerAddr = "0xa64979b0bDF63a1300a1202ecF9dB746D50BA7dd"       /// Deployed address on Kovan
     nftAuthTokenManager = await new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
 
     /// Log
