@@ -14,6 +14,7 @@ const walletAddress = process.env.WALLET_ADDRESS;
 const privateKey = process.env.PRIVATE_KEY;
 
 /***
+ * @notice - If you try to this script, you need to deploy PoolWithNftAuthToken.sol at first
  * @dev - [Execution]: $ node ./scripts/scripts-kovan/PoolWithNftAuthToken.scripts.js
  **/
 
@@ -26,20 +27,7 @@ let mUSDABI;
 let mUSDAddr;
 let mUSD;
 
-
-/* Set up contract */
-// async function setUpContracts() {
-//     poolWithNftAuthTokenABI = PoolWithNftAuthToken.abi;
-//     poolWithNftAuthTokenAddr = PoolWithNftAuthToken["networks"]["42"]["address"];    /// Deployed address on Kovan
-//     poolWithNftAuthToken = await new web3.eth.Contract(poolWithNftAuthTokenABI, poolWithNftAuthTokenAddr);
-
-//     /// Log
-//     console.log('=== poolWithNftAuthTokenAddr ===', poolWithNftAuthTokenAddr);
-// }
-// setUpContracts();
-
-
-async function _stakeIntoNftPool() {  /// [Note]: This methods was successful
+async function _stakeIntoNftPool() {  /// [Result]: This methods was successful
     /* Set up contract */
     poolWithNftAuthTokenABI = PoolWithNftAuthToken.abi;
     poolWithNftAuthTokenAddr = PoolWithNftAuthToken["networks"]["42"]["address"];    /// Deployed address on Kovan
