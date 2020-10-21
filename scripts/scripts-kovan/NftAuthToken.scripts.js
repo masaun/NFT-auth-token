@@ -51,7 +51,7 @@ async function mintAuthToken() {
     const to = walletAddress;
     const ipfsHash = "QmTifnbzEpboKEFmxbs7RTrhx2rnDnWWRv3pcdSxZKtfky";
     let inputData1 = await nftAuthToken.methods.mintAuthToken(to, ipfsHash).encodeABI();
-    let transaction1 = await sendTransaction(walletAddress, privateKey, nftAuthTokenManagerAddr, inputData1)
+    let transaction1 = await sendTransaction(walletAddress, privateKey, nftAuthTokenAddr, inputData1)
 }
 mintAuthToken();
 
