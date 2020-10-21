@@ -6,7 +6,9 @@ const provider = new Web3.providers.HttpProvider(`https://kovan.infura.io/v3/${ 
 const web3 = new Web3(provider);
 
 let PoolWithNftAuthToken = {};
+let MUSD = {};
 PoolWithNftAuthToken = require("../../build/contracts/PoolWithNftAuthToken.json");
+MUSD = require("../../node_modules/@openzeppelin/contracts/build/contracts/IERC20.json");
 
 const walletAddress = process.env.WALLET_ADDRESS;
 const privateKey = process.env.PRIVATE_KEY;
@@ -20,19 +22,41 @@ let poolWithNftAuthTokenABI;
 let poolWithNftAuthTokenAddr;
 let poolWithNftAuthToken;
 
+let mUSDABI;
+let mUSDAddr;
+let mUSD;
+
+
 /* Set up contract */
-async function _stakeIntoNftPool() {
+// async function setUpContracts() {
+//     poolWithNftAuthTokenABI = PoolWithNftAuthToken.abi;
+//     poolWithNftAuthTokenAddr = PoolWithNftAuthToken["networks"]["42"]["address"];    /// Deployed address on Kovan
+//     poolWithNftAuthToken = await new web3.eth.Contract(poolWithNftAuthTokenABI, poolWithNftAuthTokenAddr);
+
+//     /// Log
+//     console.log('=== poolWithNftAuthTokenAddr ===', poolWithNftAuthTokenAddr);
+// }
+// setUpContracts();
+
+
+async function _stakeIntoNftPool() {  /// [Note]: This methods was successful
+    /* Set up contract */
     poolWithNftAuthTokenABI = PoolWithNftAuthToken.abi;
     poolWithNftAuthTokenAddr = PoolWithNftAuthToken["networks"]["42"]["address"];    /// Deployed address on Kovan
     poolWithNftAuthToken = await new web3.eth.Contract(poolWithNftAuthTokenABI, poolWithNftAuthTokenAddr);
 
-    /// Log
-    console.log('=== poolWithNftAuthTokenAddr ===', poolWithNftAuthTokenAddr);
+    mUSDABI = MUSD.abi;
+    mUSDAddr = "0x70605Bdd16e52c86FC7031446D995Cf5c7E1b0e7";  /// [Note]: mUSD on Kovan
+    mUSD = await new web3.eth.Contract(mUSDABI, mUSDAddr);
 
-    /* Send _stakeIntoNftPool() of NftAuthTokenManager contract */
+    /* Approve mUSD */
     const amount = web3.utils.toWei(`${ 1 }`, 'ether');  /// 1 mUSD
-    let inputData1 = await poolWithNftAuthToken.methods._stakeIntoNftPool(amount).encodeABI();
-    let transaction1 = await sendTransaction(walletAddress, privateKey, poolWithNftAuthTokenAddr, inputData1)
+    let inputData1 = await mUSD.methods.approve(poolWithNftAuthTokenAddr, amount).encodeABI();
+    let transaction1 = await sendTransaction(walletAddress, privateKey, mUSDAddr, inputData1)
+
+    /* Execute _stakeIntoNftPool() of NftAuthTokenManager contract */
+    let inputData2 = await poolWithNftAuthToken.methods._stakeIntoNftPool(amount).encodeABI();
+    let transaction2 = await sendTransaction(walletAddress, privateKey, poolWithNftAuthTokenAddr, inputData2)
 }
 _stakeIntoNftPool();
 
