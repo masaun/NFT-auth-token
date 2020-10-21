@@ -5,45 +5,61 @@ const Web3 = require('web3');
 const provider = new Web3.providers.HttpProvider(`https://kovan.infura.io/v3/${ process.env.INFURA_KEY }`);
 const web3 = new Web3(provider);
 
+let NftAuthToken = {};
 let NftAuthTokenManager = {};
+NftAuthToken = require("../../build/contracts/NftAuthToken.json");
 NftAuthTokenManager = require("../../build/contracts/NftAuthTokenManager.json");
 
 const walletAddress = process.env.WALLET_ADDRESS;
 const privateKey = process.env.PRIVATE_KEY;
 
 
-/***
- * @dev - [Execution]: $ node ./scripts/scripts-kovan/NftAuthTokenManager.scripts.js
- **/
-
 /* Global variable */
+let nftAuthTokenABI;
+let nftAuthTokenAddr;
+let nftAuthToken;
+
 let nftAuthTokenManagerABI;
 let nftAuthTokenManagerAddr;
 let nftAuthTokenManager;
 
 /* Set up contract */
+// nftAuthTokenABI = NftAuthToken.abi;
+// nftAuthTokenAddr = NftAuthToken["networks"]["42"]["address"];    /// Deployed address on Kovan
+// nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
+
 nftAuthTokenManagerABI = NftAuthTokenManager.abi;
 nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["42"]["address"];    /// Deployed address on Kovan
 nftAuthTokenManager = new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
 
-/*** 
- * @dev - Send createAuthToken() of NftAuthTokenManager contract 
- **/
-async function createAuthToken() {
-    let inputData1 = await nftAuthTokenManager.methods.createAuthToken().encodeABI();
-    let transaction1 = await sendTransaction(walletAddress, privateKey, nftAuthTokenManagerAddr, inputData1)
 
+/*** 
+ * @dev - Send mintAuthToken() of NftAuthToken contract 
+ **/
+async function mintAuthToken() {
     /* Check authTokenList after createAuthToken() is executed */
     const authTokenList = await getAuthTokenList();
     console.log('\n=== authTokenList ===\n', authTokenList);
+
+    /* Choose 1 contract address which is created by NftAuthTokenManager.sol */
+    /* Create a contact instance */
+    let nftAuthTokenABI = NftAuthToken.abi;
+    let nftAuthTokenAddr = authTokenList[0];
+    let nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
+
+    /* Execute */
+    const to = walletAddress;
+    const ipfsHash = "QmTifnbzEpboKEFmxbs7RTrhx2rnDnWWRv3pcdSxZKtfky";
+    let inputData1 = await nftAuthToken.methods.mintAuthToken(to, ipfsHash).encodeABI();
+    let transaction1 = await sendTransaction(walletAddress, privateKey, nftAuthTokenManagerAddr, inputData1)
 }
-createAuthToken();
+mintAuthToken();
 
 /*** 
  * @dev - Call getAuthTokenList() of NftAuthTokenManager contract
  **/
 async function getAuthTokenList() {
-    let _authTokenList = nftAuthTokenManager.methods.getAuthTokenList().call();
+    let _authTokenList = await nftAuthTokenManager.methods.getAuthTokenList().call();
     return _authTokenList;
 }
 
