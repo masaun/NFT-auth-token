@@ -21,6 +21,8 @@ contract NftAuthToken is ERC721 {
     uint public currentAuthTokenId;
 
     constructor(
+        address to,
+        string memory ipfsHash
         //IERC20 _mUSD,
         //ISavingsContract _save,
         //IMStableHelper _helper
@@ -29,7 +31,7 @@ contract NftAuthToken is ERC721 {
         ERC721("NFT Auth Token", "NAT")
         //PoolWithNftAuthToken(_mUSD, _save, _helper)
     {
-        /// There is no code at the moment
+        _mintAuthToken(to, ipfsHash);
     }
 
     function mintAuthToken(address to, string memory ipfsHash) public returns (uint _newAuthTokenId) {
