@@ -27,16 +27,20 @@ let mUSDABI;
 let mUSDAddr;
 let mUSD;
 
+/* Set up contract */
+poolWithNftAuthTokenABI = PoolWithNftAuthToken.abi;
+poolWithNftAuthTokenAddr = PoolWithNftAuthToken["networks"]["42"]["address"];    /// Deployed address on Kovan
+poolWithNftAuthToken = new web3.eth.Contract(poolWithNftAuthTokenABI, poolWithNftAuthTokenAddr);
+
+mUSDABI = MUSD.abi;
+mUSDAddr = "0x70605Bdd16e52c86FC7031446D995Cf5c7E1b0e7";  /// [Note]: mUSD on Kovan
+mUSD = new web3.eth.Contract(mUSDABI, mUSDAddr);
+
+
+/***
+ * @dev - Execute _stakeIntoNftPool() of NftAuthTokenManager contract
+ **/
 async function _stakeIntoNftPool() {  /// [Result]: This methods was successful
-    /* Set up contract */
-    poolWithNftAuthTokenABI = PoolWithNftAuthToken.abi;
-    poolWithNftAuthTokenAddr = PoolWithNftAuthToken["networks"]["42"]["address"];    /// Deployed address on Kovan
-    poolWithNftAuthToken = await new web3.eth.Contract(poolWithNftAuthTokenABI, poolWithNftAuthTokenAddr);
-
-    mUSDABI = MUSD.abi;
-    mUSDAddr = "0x70605Bdd16e52c86FC7031446D995Cf5c7E1b0e7";  /// [Note]: mUSD on Kovan
-    mUSD = await new web3.eth.Contract(mUSDABI, mUSDAddr);
-
     /* Approve mUSD */
     const amount = web3.utils.toWei(`${ 1 }`, 'ether');  /// 1 mUSD
     let inputData1 = await mUSD.methods.approve(poolWithNftAuthTokenAddr, amount).encodeABI();
