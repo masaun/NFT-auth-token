@@ -17,18 +17,15 @@ contract NftAuthTokenManager {
 
     address[] authTokenList;  /// [Note]: This array is for using for-loop
 
-    //address DAI;
     IERC20 public mUSD;
     ISavingsContract public save;
     IMStableHelper public helper;
 
     constructor(
-        //address _dai
         IERC20 _mUSD,
         ISavingsContract _save,
         IMStableHelper _helper
     ) public {
-        //DAI = _dai;
         mUSD = _mUSD;
         save = _save;
         helper = _helper;
@@ -38,8 +35,8 @@ contract NftAuthTokenManager {
      * @notice - Create new AuthToken contract address
      **/
     function createAuthToken() public returns (address _authToken) {
-        NftAuthToken authToken = new NftAuthToken(mUSD, save, helper);
-        //NftAuthToken authToken = new NftAuthToken(DAI);
+        NftAuthToken authToken = new NftAuthToken();
+        //NftAuthToken authToken = new NftAuthToken(mUSD, save, helper);
         authTokenList.push(address(authToken));
         return address(authToken);
     }
@@ -49,5 +46,13 @@ contract NftAuthTokenManager {
     //     return address(authToken);
     // }
 
+
+
+    ///-------------------------- Getter methods ----------------------------///
+
+    function getAuthTokenList() public view returns (address[] memory _authTokenList) {
+        return authTokenList;
+    }
+    
 
 }

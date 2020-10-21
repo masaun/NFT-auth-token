@@ -49,14 +49,32 @@ contract PoolWithNftAuthToken {
         mUSD.safeApprove(address(save), uint256(-1));
     }
 
+
+    /***
+     * @notice - The most simple way to get mUSD is that utilize mStable-App on Kovan
+     *         - https://docs.mstable.org/developers/introduction#live-apps
+     *         - https://app-dot-mstable-kovan.appspot.com/#/mint 
+     *
+     * @notice - mint mUSD
+     * @dev - bAsset is DAI or USDT or USDC
+     *      - Ref: https://docs.mstable.org/mstable-assets/massets/minting-and-redemption#minting
+     **/
+    // function mintmUSD(address _bAsset, uint256 _bAssetQuantity) public returns (bool) {
+    //     IMasset(_mUSD).mint(_bAsset, _bAssetQuantity);  
+    // }
+
+
+
     /***
      * @notice - Stake an amount of mUSD and deposit into SAVE
      **/
     function _stakeIntoNftPool(
         uint256 _amount
     )
-        internal
+        public
+        //internal
         //external
+        returns (bool)
     {
         // Either we are depositing mUSD or we can mint as follows
         // IMasset(_mUSD).mint(<bAsset>, <bAssetQuanity>);
@@ -80,8 +98,10 @@ contract PoolWithNftAuthToken {
     function _withdrawFromNftPool(
         uint256 _amount
     )
-        internal
+        public
+        //internal
         //external
+        returns (bool)
     {
         /// Check balance
         uint256 poolBalance = pooledAmounts[msg.sender];
@@ -107,8 +127,10 @@ contract PoolWithNftAuthToken {
      * @notice - Distribute any of the accrued interest to the beneficiary
      **/
     function _collectInterest(address beneficiary) 
-        internal
+        public
+        //internal
         //external 
+        returns (bool)
     {
         /// Check balance of this address (contract address)
         uint256 currentBalance = helper.getSaveBalance(save, address(this));

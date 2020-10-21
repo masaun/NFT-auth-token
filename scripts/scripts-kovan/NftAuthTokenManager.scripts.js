@@ -12,31 +12,32 @@ const walletAddress = process.env.WALLET_ADDRESS;
 const privateKey = process.env.PRIVATE_KEY;
 
 /***
- * @dev - [Execution]: $ truffle test ./test/test-rinkeby/NftAuthTokenManager.test.js --network rinkeby
+ * @dev - [Execution]: $ node ./scripts/scripts-kovan/NftAuthTokenManager.scripts.js
  **/
-contract("NftAuthTokenManager", function(accounts) {
 
-    /* Global variable */
-    let nftAuthTokenManagerABI;
-    let nftAuthTokenManagerAddr;
-    let nftAuthTokenManager;
+/* Global variable */
+let nftAuthTokenManagerABI;
+let nftAuthTokenManagerAddr;
+let nftAuthTokenManager;
 
-    beforeEach('Set up contract', async () => {
-        nftAuthTokenManagerABI = NftAuthTokenManager.abi;
-        nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["42"]["address"];    /// Deployed address on Kovan
-        //nftAuthTokenManagerAddr = "0xa64979b0bDF63a1300a1202ecF9dB746D50BA7dd"       /// Deployed address on Kovan
-        nftAuthTokenManager = await new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
+/* Set up contract */
+async function createAuthToken() {
+    nftAuthTokenManagerABI = NftAuthTokenManager.abi;
+    nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["42"]["address"];    /// Deployed address on Kovan
+    //nftAuthTokenManagerAddr = "0xa64979b0bDF63a1300a1202ecF9dB746D50BA7dd"       /// Deployed address on Kovan
+    nftAuthTokenManager = await new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
 
-        /// Log
-        console.log('=== nftAuthTokenManagerAddr ===', nftAuthTokenManagerAddr);
-    });
-    
-    it('Send createAuthToken() of NftAuthTokenManager contract', async () => {  /// Success
-        let inputData1 = await nftAuthTokenManager.methods.createAuthToken().encodeABI();
-        let transaction1 = await sendTransaction(walletAddress, privateKey, nftAuthTokenManagerAddr, inputData1)
-    });
+    /// Log
+    console.log('=== nftAuthTokenManagerAddr ===', nftAuthTokenManagerAddr);
 
-});
+    /* Send createAuthToken() of NftAuthTokenManager contract */
+    let inputData1 = await nftAuthTokenManager.methods.createAuthToken().encodeABI();
+    let transaction1 = await sendTransaction(walletAddress, privateKey, nftAuthTokenManagerAddr, inputData1)
+}
+createAuthToken();
+
+
+
 
 /***
  * @notice - Sign and Broadcast the transaction
