@@ -10,8 +10,10 @@ let NftAuthTokenManager = {};
 NftAuthToken = require("../../build/contracts/NftAuthToken.json");
 NftAuthTokenManager = require("../../build/contracts/NftAuthTokenManager.json");
 
-const walletAddress = process.env.WALLET_ADDRESS;
-const privateKey = process.env.PRIVATE_KEY;
+const walletAddress1 = process.env.WALLET_ADDRESS;
+const privateKey1 = process.env.PRIVATE_KEY;
+
+const walletAddress2 = process.env.WALLET_ADDRESS_2;
 
 
 /* Global variable */
@@ -24,10 +26,6 @@ let nftAuthTokenManagerAddr;
 let nftAuthTokenManager;
 
 /* Set up contract */
-// nftAuthTokenABI = NftAuthToken.abi;
-// nftAuthTokenAddr = NftAuthToken["networks"]["42"]["address"];    /// Deployed address on Kovan
-// nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
-
 nftAuthTokenManagerABI = NftAuthTokenManager.abi;
 nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["42"]["address"];    /// Deployed address on Kovan
 nftAuthTokenManager = new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
@@ -48,10 +46,10 @@ async function mintAuthToken() {
     let nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
 
     /* Execute */
-    const to = walletAddress;
+    const to = walletAddress2;
     const ipfsHash = "QmTifnbzEpboKEFmxbs7RTrhx2rnDnWWRv3pcdSxZKtfky";
     let inputData1 = await nftAuthToken.methods.mintAuthToken(to, ipfsHash).encodeABI();
-    let transaction1 = await sendTransaction(walletAddress, privateKey, nftAuthTokenAddr, inputData1)
+    let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
 }
 mintAuthToken();
 
