@@ -62,7 +62,7 @@ contract NftAuthToken is ERC721, AccessControl {
     /***
      * @notice - Login with Auth Token
      **/
-    function loginWithAuthToken(uint authTokenId, address userAddress, string memory ipfsHash) public returns (bool _isAuth) {
+    function loginWithAuthToken(uint authTokenId, address userAddress, string memory ipfsHash) public view returns (bool _isAuth) {
         /// [Note]: Check whether a login user has role or not
         require(hasRole(USER_ROLE, msg.sender), "Caller is not a user");
 
