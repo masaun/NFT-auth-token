@@ -6,6 +6,8 @@ import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 //import { SafeERC20 }  from "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 
+import "@openzeppelin/contracts/access/AccessControl.sol";
+
 //import { IMasset } from "./@mstable/protocol/contracts/interfaces/IMasset.sol";
 //import { IMStableHelper } from "./@mstable/protocol/contracts/interfaces/IMStableHelper.sol";
 //import { ISavingsContract } from "./@mstable/protocol/contracts/interfaces/ISavingsContract.sol";
@@ -13,12 +15,14 @@ import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 //import { PoolWithNftAuthToken } from "./PoolWithNftAuthToken.sol";
 
 
-contract NftAuthToken is ERC721 {
+contract NftAuthToken is ERC721, AccessControl {
 // contract NftAuthToken is ERC721, PoolWithNftAuthToken {
     using SafeMath for uint;
-    //using SafeERC20 for IERC20;    
+    //using SafeERC20 for IERC20;
 
     uint public currentAuthTokenId;
+
+    bytes32 public constant USER_ROLE = keccak256("USER_ROLE");
 
     constructor(
         address to,
@@ -32,10 +36,17 @@ contract NftAuthToken is ERC721 {
         //PoolWithNftAuthToken(_mUSD, _save, _helper)
     {
         _mintAuthToken(to, ipfsHash);
+
+        /// Grant the creator of this contract the default admin role: it will be able
+        /// to grant and revoke any roles
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     function mintAuthToken(address to, string memory ipfsHash) public returns (uint _newAuthTokenId) {
         _mintAuthToken(to, ipfsHash);
+
+        /// Grant an user who is minted the AuthToken the user-role
+        _setupRole(USER_ROLE, to);
     }
 
     function _mintAuthToken(address to, string memory ipfsHash) internal returns (uint _newAuthTokenId) {
@@ -51,7 +62,10 @@ contract NftAuthToken is ERC721 {
     /***
      * @notice - Login with Auth Token
      **/
-    function loginWithAuthToken(uint authTokenId, address userAddress, string memory ipfsHash) public returns (bool _isAuth) {
+    function loginWithAuthToken(uint authTokenId, address userAddress, string memory ipfsHash) public view returns (bool _isAuth) {
+        /// [Note]: Check whether a login user has role or not
+        require(hasRole(USER_ROLE, msg.sender), "Caller is not a user");
+
         /// [Note]: Convert each value (data-type are string) to hash in order to compare with each other 
         bytes32 hash1 = keccak256(abi.encodePacked(ipfsHash));
         bytes32 hash2 = keccak256(abi.encodePacked(tokenURI(authTokenId)));
