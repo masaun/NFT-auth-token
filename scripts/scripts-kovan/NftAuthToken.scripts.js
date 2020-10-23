@@ -70,7 +70,7 @@ async function loginWithAuthToken() {
     /* Check authTokenList after createAuthToken() is executed */
     const authTokenList = await getAuthTokenList();
     console.log('\n=== authTokenList ===\n', authTokenList);
-    
+
     /* Choose 1 contract address which is created by NftAuthTokenManager.sol */
     /* Create a contact instance */
     let nftAuthTokenABI = NftAuthToken.abi;
@@ -81,8 +81,10 @@ async function loginWithAuthToken() {
     const authTokenId = 1;
     const userAddress = walletAddress2;
     const ipfsHash = "QmTifnbzEpboKEFmxbs7RTrhx2rnDnWWRv3pcdSxZKtfky";
-    let inputData1 = await nftAuthToken.methods.loginWithAuthToken(authTokenId, userAddress, ipfsHash).encodeABI();
-    let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
+    let isAuth = await nftAuthToken.methods.loginWithAuthToken(authTokenId, userAddress, ipfsHash).call();
+    // let inputData1 = await nftAuthToken.methods.loginWithAuthToken(authTokenId, userAddress, ipfsHash).encodeABI();
+    // let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
+    console.log('=== isAuth ===', isAuth);
 }
 loginWithAuthToken();
 
