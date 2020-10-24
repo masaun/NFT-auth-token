@@ -35,8 +35,6 @@ contract NftAuthToken is ERC721, AccessControl {
         ERC721("NFT Auth Token", "NAT")
         //PoolWithNftAuthToken(_mUSD, _save, _helper)
     {
-        _mintAuthToken(to, ipfsHash);
-
         /// Grant the creator of this contract the default admin role: it will be able
         /// to grant and revoke any roles
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);

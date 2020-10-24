@@ -31,6 +31,7 @@ nftAuthTokenManager = new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthToken
  **/
 async function createAuthToken() {
     const to = walletAddress;
+    console.log('\n=== walletAddress ===\n', walletAddress);
     const ipfsHash = "QmT4AeWE9Q9EaoyLJiqaZuYQ8mJeq4ZBncjjFH9dQ9uDVA";
     let inputData1 = await nftAuthTokenManager.methods.createAuthToken(to, ipfsHash).encodeABI();
     let transaction1 = await sendTransaction(walletAddress, privateKey, nftAuthTokenManagerAddr, inputData1)
