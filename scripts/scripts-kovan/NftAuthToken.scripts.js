@@ -120,7 +120,7 @@ async function createPool() {
     let inputData1 = await nftAuthToken.methods.createPool(_mUSD, _save, _helper).encodeABI();
     let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
 }
-mintAuthToken();
+createPool();
 
 
 
