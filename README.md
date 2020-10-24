@@ -3,6 +3,11 @@
 ***
 ## 【Introduction of NFT based Auth Token💳】
 - This is the smart contract for ...
+- NFT Auth Token works as a ACL Token.
+  - User who has a NFT Auth Token, they can access contents which is permitted. 
+  - Login by being checked whether user has a NFT Auth Token or not.
+- 1 NFT Auth Token, 1 Pool for staking and earning interest (in the future) 
+- IPFS hash is created by uploading an image of user profile.
 
 &nbsp;
 
