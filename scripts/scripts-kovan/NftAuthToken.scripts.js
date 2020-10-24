@@ -7,8 +7,10 @@ const web3 = new Web3(provider);
 
 let NftAuthToken = {};
 let NftAuthTokenManager = {};
+let MUSD = {};
 NftAuthToken = require("../../build/contracts/NftAuthToken.json");
 NftAuthTokenManager = require("../../build/contracts/NftAuthTokenManager.json");
+MUSD = require("../../node_modules/@openzeppelin/contracts/build/contracts/IERC20.json");
 
 const walletAddress1 = process.env.WALLET_ADDRESS;
 const privateKey1 = process.env.PRIVATE_KEY;
@@ -25,10 +27,18 @@ let nftAuthTokenManagerABI;
 let nftAuthTokenManagerAddr;
 let nftAuthTokenManager;
 
+let mUSDABI;
+let mUSDAddr;
+let mUSD;
+
 /* Set up contract */
 nftAuthTokenManagerABI = NftAuthTokenManager.abi;
 nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["42"]["address"];    /// Deployed address on Kovan
 nftAuthTokenManager = new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
+
+mUSDABI = MUSD.abi;
+mUSDAddr = "0x70605Bdd16e52c86FC7031446D995Cf5c7E1b0e7";  /// [Note]: mUSD on Kovan
+mUSD = new web3.eth.Contract(mUSDABI, mUSDAddr);
 
 
 /*** 
@@ -88,6 +98,29 @@ async function loginWithAuthToken() {
 }
 loginWithAuthToken();
 
+
+/*** 
+ * @dev - Send createPool() of NftAuthToken contract 
+ **/
+async function createPool() {
+    /* Check authTokenList after createAuthToken() is executed */
+    const authTokenList = await getAuthTokenList();
+    console.log('\n=== authTokenList ===\n', authTokenList);
+
+    /* Choose 1 contract address which is created by NftAuthTokenManager.sol */
+    /* Create a contact instance */
+    let nftAuthTokenABI = NftAuthToken.abi;
+    let nftAuthTokenAddr = authTokenList[0];
+    let nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
+
+    /* Execute */
+    const _mUSD = mUSDAddr;
+    const _save = "0x54Ac0bdf4292F7565Af13C9FBEf214eEEB2d0F87";
+    const _helper = "0x790d4f6ce913278e35192f3cf91b90e53657222b";
+    let inputData1 = await nftAuthToken.methods.createPool(_mUSD, _save, _helper).encodeABI();
+    let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
+}
+mintAuthToken();
 
 
 
