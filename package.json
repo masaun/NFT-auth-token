@@ -6,9 +6,11 @@
     "test": "test"
   },
   "scripts": {
+    "script:NftAuthToken": "node ./scripts/scripts-kovan/NftAuthToken.scripts.js",
+    "script:NftAuthTokenManager": "node ./scripts/scripts-kovan/NftAuthTokenManager.scripts.js",
+    "script:PoolWithNftAuthToken": "node ./scripts/scripts-kovan/PoolWithNftAuthToken.scripts.js",
     "test:local": "truffle test ./test/test-local/* --network local",
     "test:kovan": "truffle test ./test/test-kovan/* --network kovan",
-    "script:kovan": "node ./scripts/scripts-kovan/*",
     "start-blank": "rm -rf client/src && cp -rf barebones/src client/",
     "client": "cd client && npm run start",
     "console:kovan": "truffle console --network kovan",

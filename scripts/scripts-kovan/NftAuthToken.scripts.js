@@ -102,25 +102,25 @@ loginWithAuthToken();
 /*** 
  * @dev - Send createPool() of NftAuthToken contract 
  **/
-async function createPool() {
-    /* Check authTokenList after createAuthToken() is executed */
-    const authTokenList = await getAuthTokenList();
-    console.log('\n=== authTokenList ===\n', authTokenList);
+// async function createPool() {
+//     /* Check authTokenList after createAuthToken() is executed */
+//     const authTokenList = await getAuthTokenList();
+//     console.log('\n=== authTokenList ===\n', authTokenList);
 
-    /* Choose 1 contract address which is created by NftAuthTokenManager.sol */
-    /* Create a contact instance */
-    let nftAuthTokenABI = NftAuthToken.abi;
-    let nftAuthTokenAddr = authTokenList[0];
-    let nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
+//     /* Choose 1 contract address which is created by NftAuthTokenManager.sol */
+//     /* Create a contact instance */
+//     let nftAuthTokenABI = NftAuthToken.abi;
+//     let nftAuthTokenAddr = authTokenList[0];
+//     let nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
 
-    /* Execute */
-    const _mUSD = mUSDAddr;
-    const _save = "0x54Ac0bdf4292F7565Af13C9FBEf214eEEB2d0F87";
-    const _helper = "0x790d4f6ce913278e35192f3cf91b90e53657222b";
-    let inputData1 = await nftAuthToken.methods.createPool(_mUSD, _save, _helper).encodeABI();
-    let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
-}
-createPool();
+//     /* Execute */
+//     const _mUSD = mUSDAddr;
+//     const _save = "0x54Ac0bdf4292F7565Af13C9FBEf214eEEB2d0F87";
+//     const _helper = "0x790d4f6ce913278e35192f3cf91b90e53657222b";
+//     let inputData1 = await nftAuthToken.methods.createPool(_mUSD, _save, _helper).encodeABI();
+//     let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
+// }
+// createPool();
 
 
 
