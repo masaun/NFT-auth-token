@@ -6,6 +6,6 @@ pragma solidity ^0.6.12;
  **/
 interface IEthereumDIDRegistry {
 
-    function identityOwner(address identity) external view returns(address) {}
+    function identityOwner(address identity) external view returns (address);
 
 }

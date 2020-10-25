@@ -31,6 +31,7 @@ nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["42"]["address"];    /
 nftAuthTokenManager = new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
 
 
+
 /*** 
  * @dev - Send mintAuthToken() of NftAuthToken contract 
  **/
@@ -62,32 +63,28 @@ async function getAuthTokenList() {
 }
 
 
-
 /*** 
- * @dev - loginWithAuthToken() method of NftAuthToken contract 
+ * @dev - Send createPool() of NftAuthToken contract 
  **/
-async function loginWithAuthToken() {
-    /* Check authTokenList after createAuthToken() is executed */
-    const authTokenList = await getAuthTokenList();
-    console.log('\n=== authTokenList ===\n', authTokenList);
+// async function createPool() {
+//     /* Check authTokenList after createAuthToken() is executed */
+//     const authTokenList = await getAuthTokenList();
+//     console.log('\n=== authTokenList ===\n', authTokenList);
 
-    /* Choose 1 contract address which is created by NftAuthTokenManager.sol */
-    /* Create a contact instance */
-    let nftAuthTokenABI = NftAuthToken.abi;
-    let nftAuthTokenAddr = authTokenList[0];
-    let nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
+//     /* Choose 1 contract address which is created by NftAuthTokenManager.sol */
+//     /* Create a contact instance */
+//     let nftAuthTokenABI = NftAuthToken.abi;
+//     let nftAuthTokenAddr = authTokenList[0];
+//     let nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
 
-    /* Execute */
-    const authTokenId = 3;
-    const userAddress = walletAddress2;
-    const ipfsHash = "QmTifnbzEpboKEFmxbs7RTrhx2rnDnWWRv3pcdSxZKtfky";
-    let isAuth = await nftAuthToken.methods.loginWithAuthToken(authTokenId, userAddress, ipfsHash).call();
-    // let inputData1 = await nftAuthToken.methods.loginWithAuthToken(authTokenId, userAddress, ipfsHash).encodeABI();
-    // let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
-    console.log(`\n=== isAuth: ${ isAuth } ===\n`);   /// [Result]: === isAuth: true ===
-}
-loginWithAuthToken();
-
+//     /* Execute */
+//     const _mUSD = mUSDAddr;
+//     const _save = "0x54Ac0bdf4292F7565Af13C9FBEf214eEEB2d0F87";
+//     const _helper = "0x790d4f6ce913278e35192f3cf91b90e53657222b";
+//     let inputData1 = await nftAuthToken.methods.createPool(_mUSD, _save, _helper).encodeABI();
+//     let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
+// }
+// createPool();
 
 
 

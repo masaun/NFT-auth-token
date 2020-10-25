@@ -20,6 +20,8 @@ contract NftAuthToken is ERC721, AccessControl {
     using SafeMath for uint;
     //using SafeERC20 for IERC20;
 
+    //mapping (address => address) pools;
+
     uint public currentAuthTokenId;
 
     bytes32 public constant USER_ROLE = keccak256("USER_ROLE");
@@ -35,8 +37,6 @@ contract NftAuthToken is ERC721, AccessControl {
         ERC721("NFT Auth Token", "NAT")
         //PoolWithNftAuthToken(_mUSD, _save, _helper)
     {
-        _mintAuthToken(to, ipfsHash);
-
         /// Grant the creator of this contract the default admin role: it will be able
         /// to grant and revoke any roles
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -64,7 +64,7 @@ contract NftAuthToken is ERC721, AccessControl {
      **/
     function loginWithAuthToken(uint authTokenId, address userAddress, string memory ipfsHash) public view returns (bool _isAuth) {
         /// [Note]: Check whether a login user has role or not
-        require(hasRole(USER_ROLE, msg.sender), "Caller is not a user");
+        require(hasRole(USER_ROLE, userAddress), "Caller is not a user");
 
         /// [Note]: Convert each value (data-type are string) to hash in order to compare with each other 
         bytes32 hash1 = keccak256(abi.encodePacked(ipfsHash));
@@ -80,6 +80,22 @@ contract NftAuthToken is ERC721, AccessControl {
 
         return isAuth;
     }
+
+
+    /***
+     * @notice - Pool Factory 
+     **/
+    // function createPool(IERC20 _mUSD, ISavingsContract _save, IMStableHelper _helper) public returns (address _pool) {
+    //     PoolWithNftAuthToken poolWithNftAuthToken = new PoolWithNftAuthToken(_mUSD, _save, _helper);
+    //     pools[address(this)] = address(poolWithNftAuthToken);
+    //     return address(poolWithNftAuthToken);
+    // }
+
+    // function getPool(address _authToken) public view returns (address _pool) {
+    //     return pools[_authToken];
+    // }
+    
+
 
 
     /***

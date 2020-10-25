@@ -134,7 +134,7 @@ contract PoolWithNftAuthToken {
     {
         /// Check balance of this address (contract address)
         uint256 currentBalance = helper.getSaveBalance(save, address(this));
-        uint256 delta = currentBalance - totalPooledAmounts;
+        uint256 delta = currentBalance.sub(totalPooledAmounts);
 
         uint256 creditsToRedeem = helper.getSaveRedeemInput(save, delta);
         save.redeem(creditsToRedeem);
