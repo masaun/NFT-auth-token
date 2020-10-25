@@ -7,10 +7,8 @@ const web3 = new Web3(provider);
 
 let NftAuthToken = {};
 let NftAuthTokenManager = {};
-let MUSD = {};
 NftAuthToken = require("../../build/contracts/NftAuthToken.json");
 NftAuthTokenManager = require("../../build/contracts/NftAuthTokenManager.json");
-MUSD = require("../../node_modules/@openzeppelin/contracts/build/contracts/IERC20.json");
 
 const walletAddress1 = process.env.WALLET_ADDRESS;
 const privateKey1 = process.env.PRIVATE_KEY;
@@ -27,18 +25,11 @@ let nftAuthTokenManagerABI;
 let nftAuthTokenManagerAddr;
 let nftAuthTokenManager;
 
-let mUSDABI;
-let mUSDAddr;
-let mUSD;
-
 /* Set up contract */
 nftAuthTokenManagerABI = NftAuthTokenManager.abi;
 nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["42"]["address"];    /// Deployed address on Kovan
 nftAuthTokenManager = new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
 
-mUSDABI = MUSD.abi;
-mUSDAddr = "0x70605Bdd16e52c86FC7031446D995Cf5c7E1b0e7";  /// [Note]: mUSD on Kovan
-mUSD = new web3.eth.Contract(mUSDABI, mUSDAddr);
 
 
 /*** 
@@ -88,12 +79,10 @@ async function loginWithAuthToken() {
     let nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
 
     /* Execute */
-    const authTokenId = 3;
+    const authTokenId = 2;
     const userAddress = walletAddress2;
     const ipfsHash = "QmTifnbzEpboKEFmxbs7RTrhx2rnDnWWRv3pcdSxZKtfky";
     let isAuth = await nftAuthToken.methods.loginWithAuthToken(authTokenId, userAddress, ipfsHash).call();
-    // let inputData1 = await nftAuthToken.methods.loginWithAuthToken(authTokenId, userAddress, ipfsHash).encodeABI();
-    // let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
     console.log(`\n=== isAuth: ${ isAuth } ===\n`);   /// [Result]: === isAuth: true ===
 }
 loginWithAuthToken();
