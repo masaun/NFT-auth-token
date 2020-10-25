@@ -89,26 +89,14 @@ $ npm run test:kovan
 ## 【References】
 - [NFT]
   - Openzepplin document for ERC721
-
-
-
-- [mStable]:
-  -
-  -
-
-
-- [Ethr-DID-Registry]
-  - 
-
+    https://docs.openzeppelin.com/contracts/3.x/erc721
 
 <br>
 
+- [mStable]:
+  - https://docs.mstable.org/
 
-- [Untitled: NFT Hackathon]:
-  - Website
-    
-  
-  - Information
-    https://metaforce.substack.com/p/introducing-untitled-nft-hackathon
-    https://twitter.com/NFT_hack 
-    https://medium.com/ethplanet/ethplanet-hackathon-building-the-next-digital-world-2d0246027d78
+<br>
+
+- [Ethr-DID-Registry (from uPort)]
+  - https://github.com/uport-project/ethr-did-registry
