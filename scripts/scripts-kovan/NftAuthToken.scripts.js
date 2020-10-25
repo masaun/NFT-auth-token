@@ -63,31 +63,6 @@ async function getAuthTokenList() {
 }
 
 
-
-/*** 
- * @dev - loginWithAuthToken() method of NftAuthToken contract 
- **/
-async function loginWithAuthToken() {
-    /* Check authTokenList after createAuthToken() is executed */
-    const authTokenList = await getAuthTokenList();
-    console.log('\n=== authTokenList ===\n', authTokenList);
-
-    /* Choose 1 contract address which is created by NftAuthTokenManager.sol */
-    /* Create a contact instance */
-    let nftAuthTokenABI = NftAuthToken.abi;
-    let nftAuthTokenAddr = authTokenList[0];
-    let nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
-
-    /* Execute */
-    const authTokenId = 2;
-    const userAddress = walletAddress2;
-    const ipfsHash = "QmTifnbzEpboKEFmxbs7RTrhx2rnDnWWRv3pcdSxZKtfky";
-    let isAuth = await nftAuthToken.methods.loginWithAuthToken(authTokenId, userAddress, ipfsHash).call();
-    console.log(`\n=== isAuth: ${ isAuth } ===\n`);   /// [Result]: === isAuth: true ===
-}
-loginWithAuthToken();
-
-
 /*** 
  * @dev - Send createPool() of NftAuthToken contract 
  **/

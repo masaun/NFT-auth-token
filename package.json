@@ -7,6 +7,7 @@
   },
   "scripts": {
     "script:NftAuthToken": "node ./scripts/scripts-kovan/NftAuthToken.scripts.js",
+    "script:NftAuthToken-isLogin": "node ./scripts/scripts-kovan/NftAuthToken-isLogin.scripts.js",
     "script:NftAuthTokenManager": "node ./scripts/scripts-kovan/NftAuthTokenManager.scripts.js",
     "script:PoolWithNftAuthToken": "node ./scripts/scripts-kovan/PoolWithNftAuthToken.scripts.js",
     "test:local": "truffle test ./test/test-local/* --network local",
