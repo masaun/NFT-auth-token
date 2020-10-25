@@ -2,23 +2,26 @@ pragma solidity ^0.6.12;
 pragma experimental ABIEncoderV2;
 
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-//import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 //import { SafeERC20 }  from "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 //import { IMasset } from "./@mstable/protocol/contracts/interfaces/IMasset.sol";
-//import { IMStableHelper } from "./@mstable/protocol/contracts/interfaces/IMStableHelper.sol";
-//import { ISavingsContract } from "./@mstable/protocol/contracts/interfaces/ISavingsContract.sol";
+import { IMStableHelper } from "./@mstable/protocol/contracts/interfaces/IMStableHelper.sol";
+import { ISavingsContract } from "./@mstable/protocol/contracts/interfaces/ISavingsContract.sol";
 
-//import { PoolWithNftAuthToken } from "./PoolWithNftAuthToken.sol";
+import { PoolWithNftAuthToken } from "./PoolWithNftAuthToken.sol";
 
 
 contract NftAuthToken is ERC721, AccessControl {
 // contract NftAuthToken is ERC721, PoolWithNftAuthToken {
     using SafeMath for uint;
     //using SafeERC20 for IERC20;
+
+    mapping (address => address) pools;
+    
 
     uint public currentAuthTokenId;
 
@@ -83,15 +86,15 @@ contract NftAuthToken is ERC721, AccessControl {
     /***
      * @notice - Pool Factory 
      **/
-    // function createPool(IERC20 _mUSD, ISavingsContract _save, IMStableHelper _helper) public returns (address _pool) {
-    //     PoolWithNftAuthToken poolWithNftAuthToken = new PoolWithNftAuthToken(_mUSD, _save, _helper);
-    //     pool[address(this)] = address(poolWithNftAuthToken);
-    //     return address(poolWithNftAuthToken);
-    // }
+    function createPool(IERC20 _mUSD, ISavingsContract _save, IMStableHelper _helper) public returns (address _pool) {
+        PoolWithNftAuthToken poolWithNftAuthToken = new PoolWithNftAuthToken(_mUSD, _save, _helper);
+        pools[address(this)] = address(poolWithNftAuthToken);
+        return address(poolWithNftAuthToken);
+    }
 
-    // function getPool(address _authToken) public view returns (address _pool) {
-    //     return pool[_authToken];
-    // }
+    function getPool(address _authToken) public view returns (address _pool) {
+        return pools[_authToken];
+    }
     
 
 
