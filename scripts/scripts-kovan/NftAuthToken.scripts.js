@@ -31,6 +31,17 @@ nftAuthTokenManagerAddr = NftAuthTokenManager["networks"]["42"]["address"];    /
 nftAuthTokenManager = new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthTokenManagerAddr);
 
 
+/***
+ * @notice - Execute all methods
+ **/
+async function main () {
+    await mintAuthToken();
+
+    await loginWithAuthToken();
+}
+main();
+
+
 
 /*** 
  * @dev - Send mintAuthToken() of NftAuthToken contract 
@@ -52,7 +63,6 @@ async function mintAuthToken() {
     let inputData1 = await nftAuthToken.methods.mintAuthToken(to, ipfsHash).encodeABI();
     let transaction1 = await sendTransaction(walletAddress1, privateKey1, nftAuthTokenAddr, inputData1)
 }
-mintAuthToken();
 
 /*** 
  * @dev - Call getAuthTokenList() of NftAuthTokenManager contract
@@ -61,6 +71,33 @@ async function getAuthTokenList() {
     let _authTokenList = await nftAuthTokenManager.methods.getAuthTokenList().call();
     return _authTokenList;
 }
+
+/*** 
+ * @dev - loginWithAuthToken() method of NftAuthToken contract 
+ **/
+async function loginWithAuthToken() {
+    /* Check authTokenList after createAuthToken() is executed */
+    const authTokenList = await getAuthTokenList();
+    console.log('\n=== authTokenList ===\n', authTokenList);
+
+    /* Choose 1 contract address which is created by NftAuthTokenManager.sol */
+    /* Create a contact instance */
+    let nftAuthTokenABI = NftAuthToken.abi;
+    let nftAuthTokenAddr = authTokenList[0];
+    let nftAuthToken = new web3.eth.Contract(nftAuthTokenABI, nftAuthTokenAddr);
+
+    /* Execute */
+    const authTokenId = 1;
+    const userAddress = walletAddress2;
+    const ipfsHash = "QmTifnbzEpboKEFmxbs7RTrhx2rnDnWWRv3pcdSxZKtfky";
+    let isAuth = await nftAuthToken.methods.loginWithAuthToken(authTokenId, userAddress, ipfsHash).call();
+    console.log(`\n=== isAuth: ${ isAuth } ===\n`);   /// [Result]: === isAuth: true ===
+}
+
+
+
+
+
 
 
 /*** 
