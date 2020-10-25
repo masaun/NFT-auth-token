@@ -34,10 +34,9 @@ nftAuthTokenManager = new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthToken
 /***
  * @notice - Execute all methods
  **/
-async function main () {
-    await mintAuthToken();
-
-    await loginWithAuthToken();
+async function main() {
+    await mintAuthToken();       /// Method should be executed at 1st 
+    await loginWithAuthToken();  /// Method should be executed at 2nd
 }
 main();
 
@@ -92,6 +91,7 @@ async function loginWithAuthToken() {
     const ipfsHash = "QmTifnbzEpboKEFmxbs7RTrhx2rnDnWWRv3pcdSxZKtfky";
     let isAuth = await nftAuthToken.methods.loginWithAuthToken(authTokenId, userAddress, ipfsHash).call();
     console.log(`\n=== isAuth: ${ isAuth } ===\n`);   /// [Result]: === isAuth: true ===
+    console.log(`\n=== If 'isAuth' is true, this user can log-in ===\n`)
 }
 
 
