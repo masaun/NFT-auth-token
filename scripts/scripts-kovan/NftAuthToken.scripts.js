@@ -35,9 +35,8 @@ nftAuthTokenManager = new web3.eth.Contract(nftAuthTokenManagerABI, nftAuthToken
  * @notice - Execute all methods
  **/
 async function main () {
-    await mintAuthToken();
-
-    await loginWithAuthToken();
+    await mintAuthToken();       /// Method should be executed at 1st 
+    await loginWithAuthToken();  /// Method should be executed at 2nd
 }
 main();
 
