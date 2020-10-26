@@ -39,7 +39,14 @@
 ***
 
 ## 【Setup】
-1. Npm install
+1. Add `.env` file into the root directory.
+- `.env.example` is a reference for creating `.env` .
+https://github.com/masaun/NFT-auth-token/blob/master/.env.example
+
+
+<br>
+
+2. Npm install
 ```
 $ npm install
 ```
@@ -47,7 +54,7 @@ $ npm install
 <br>
 
 
-2. Migrate
+3. Migrate
 ```
 $ npm run migrate:kovan
 ```
@@ -61,10 +68,14 @@ $ npm run migrate:kovan
 $ npm run script:NftAuthTokenManager
 ```
 
+<br>
+
 2. Mint a new Auth Token ID for user who is called. After that, system check verification whether user who is called has NFT Auth Token (Token ID) or not.
 ```
 $ npm run script:NftAuthToken
 ```
+
+<br>
 
 3. (Future implementaion)
 ```
