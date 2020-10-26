@@ -2,11 +2,11 @@
 
 ***
 ## 【Introduction of NFT based Auth Token】
-- This is the smart contract that NFT is used for the ACL management.
+- This is the smart contract that NFT is used for the AC (Access Control) management.
 
 <br>
 
-- NFT Auth Token works as a ACL Token.
+- NFT Auth Token works as a AC (Access Control) Token.
   - If an user who has a NFT Auth Token, that user can access contents which is permitted. 
     (Admin has tokenID=1 of NFT Auth Token, User has tokenID that is greater than 2 of NFT Auth Token. Depends on tokenID, accessable contents level are different)
   - Login by being verified (checked) whether user has a NFT Auth Token or not.
