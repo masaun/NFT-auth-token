@@ -6,7 +6,7 @@ import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 //import { SafeERC20 }  from "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import { SafeMath } from "@openzeppelin/contracts/math/SafeMath.sol";
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
 
 //import { IMasset } from "./@mstable/protocol/contracts/interfaces/IMasset.sol";
 //import { IMStableHelper } from "./@mstable/protocol/contracts/interfaces/IMStableHelper.sol";
